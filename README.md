@@ -1,6 +1,6 @@
-# 百度网盘传输监视器
+# BaiduPCS GUI
 
-置顶悬浮胶囊，自动发现正在运行的 BaiduPCS-Go 上传／下载任务并显示进度。Rust + [gpui](https://gpui.rs)（Zed 的 GPU 界面框架），无需参数。
+[BaiduPCS-Go](https://github.com/qjfoidnh/BaiduPCS-Go)（百度网盘命令行客户端）的图形界面客户端：置顶悬浮胶囊，自动发现正在运行的 BaiduPCS-Go 上传／下载任务，显示进度并可暂停、继续、停止、续传。Rust + [gpui](https://gpui.rs)（Zed 的 GPU 界面框架），无需参数。
 
 ## 使用
 
