@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- 云中箭（蓝绿渐变）：几何云 + 圆角镂空下箭头；上传蓝 #4C9EFF → 下载绿 #3DDC97 -->
+  <defs>
+    <linearGradient id="cloud-fill" gradientUnits="userSpaceOnUse" x1="22" y1="30" x2="80" y2="74">
+      <stop offset="0.1" stop-color="#4C9EFF"/>
+      <stop offset="0.95" stop-color="#3DDC97"/>
+    </linearGradient>
+    <mask id="arrow-cut">
+      <rect width="100" height="100" fill="#fff"/>
+      <g stroke="#000" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        <line x1="50" y1="39" x2="50" y2="62"/>
+        <polyline points="41,54 50,63 59,54"/>
+      </g>
+    </mask>
+  </defs>
+  <g fill="url(#cloud-fill)" mask="url(#arrow-cut)">
+    <circle cx="30" cy="61" r="13"/>
+    <circle cx="50" cy="47" r="20"/>
+    <circle cx="69" cy="58" r="14"/>
+    <rect x="17" y="51" width="66" height="23" rx="11.5"/>
+  </g>
+</svg>
