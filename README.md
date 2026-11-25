@@ -22,7 +22,7 @@
   - 以上操作都以进程为单位：同一条 `upload` 命令里的多个文件、保存到同一目录的下载会一起暂停／停止／续传。
 - 重复启动不会出现第二个胶囊（本机端口 47613 作为单实例锁）。
 
-数据目录：Windows `%LOCALAPPDATA%\baidupcs-upload-monitor`，macOS `~/Library/Application Support/baidupcs-upload-monitor`，Linux `$XDG_DATA_HOME`（或 `~/.local/share`）`/baidupcs-upload-monitor`。
+数据目录：Windows `%LOCALAPPDATA%\baidupcs-gui`，macOS `~/Library/Application Support/baidupcs-gui`，Linux `$XDG_DATA_HOME`（或 `~/.local/share`）`/baidupcs-gui`。
 
 ## 数据来源
 
@@ -49,7 +49,7 @@ Windows 实现要点（`src/platform.rs`）：gpui 0.2 在 Windows 上没有置�
 
 ```powershell
 cargo build --release
-.\target\release\baidu-transfer-monitor.exe    # 运行
+.\target\release\baidupcs-gui.exe    # 运行
 cargo test --release                           # 断点文件解析、meta 输出、配置目录规则、真实暂停／恢复子进程
 ```
 

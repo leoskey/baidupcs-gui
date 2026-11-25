@@ -174,7 +174,7 @@ pub fn open_capsule(monitor: Entity<Monitor>, cx: &mut App) {
         is_movable: false,
         is_resizable: false,
         window_background: WindowBackgroundAppearance::Transparent,
-        app_id: Some("baidu-transfer-monitor".into()),
+        app_id: Some("baidupcs-gui".into()),
         ..Default::default()
     };
     cx.open_window(options, |window, cx| {
@@ -451,7 +451,7 @@ impl Capsule {
             is_movable: false,
             is_resizable: false,
             window_background: WindowBackgroundAppearance::Transparent,
-            app_id: Some("baidu-transfer-monitor".into()),
+            app_id: Some("baidupcs-gui".into()),
             ..Default::default()
         };
         let monitor = self.monitor.clone();
@@ -531,7 +531,7 @@ impl Capsule {
             is_movable: false,
             is_resizable: false,
             window_background: WindowBackgroundAppearance::Transparent,
-            app_id: Some("baidu-transfer-monitor".into()),
+            app_id: Some("baidupcs-gui".into()),
             ..Default::default()
         };
         let monitor = self.monitor.clone();

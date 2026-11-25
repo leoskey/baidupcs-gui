@@ -1,6 +1,6 @@
 //! 本机小文件持久化：胶囊位置、暂停记录。目录：
 //! Windows `%LOCALAPPDATA%`，macOS `~/Library/Application Support`，Linux `$XDG_DATA_HOME` 或 `~/.local/share`，
-//! 下的 `baidupcs-upload-monitor`。
+//! 下的 `baidupcs-gui`。
 
 use std::path::PathBuf;
 
@@ -16,7 +16,7 @@ pub fn dir() -> PathBuf {
         env("XDG_DATA_HOME").or_else(|| env("HOME").map(|h| h.join(".local").join("share")))
     };
     base.unwrap_or_else(std::env::temp_dir)
-        .join("baidupcs-upload-monitor")
+        .join("baidupcs-gui")
 }
 
 pub fn load<T: DeserializeOwned>(name: &str) -> Option<T> {
