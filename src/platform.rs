@@ -1,4 +1,4 @@
-//! 平台相关能力：窗口置顶／移动、显示器工作区、全局光标、暂停进程。
+//! 平台相关能力：窗口置顶／移动／显示隐藏、显示器工作区、全局光标、暂停进程。
 //!
 //! gpui 0.2 在 Windows 上没有“置顶”和“创建后移动窗口”的接口，这里通过原生窗口句柄实现。
 //! 窗口相关能力目前只有 Windows 完整实现；其他平台返回 `None`，界面退化为不吸附、不强制置顶。
@@ -50,8 +50,9 @@ mod imp {
     use windows_sys::Win32::UI::Input::KeyboardAndMouse::{GetAsyncKeyState, VK_LBUTTON};
     use windows_sys::Win32::UI::WindowsAndMessaging::{
         GWL_STYLE, GetClientRect, GetCursorPos, GetWindowLongPtrW, GetWindowRect, HWND_TOPMOST,
-        SWP_FRAMECHANGED, SWP_NOACTIVATE, SWP_NOMOVE, SWP_NOSIZE, SWP_NOZORDER, SetWindowLongPtrW,
-        SetWindowPos, WS_CAPTION, WS_POPUP, WS_SYSMENU, WS_THICKFRAME,
+        IsWindowVisible, SW_HIDE, SW_SHOWNOACTIVATE, SWP_FRAMECHANGED, SWP_NOACTIVATE, SWP_NOMOVE,
+        SWP_NOSIZE, SWP_NOZORDER, SetWindowLongPtrW, SetWindowPos, ShowWindow, WS_CAPTION,
+        WS_POPUP, WS_SYSMENU, WS_THICKFRAME,
     };
 
     #[link(name = "ntdll")]
@@ -209,6 +210,14 @@ mod imp {
         !unsafe { MonitorFromPoint(POINT { x, y }, MONITOR_DEFAULTTONULL) }.is_null()
     }
 
+    pub fn is_visible(h: isize) -> bool {
+        unsafe { IsWindowVisible(hwnd(h)) != 0 }
+    }
+
+    pub fn set_visible(h: isize, show: bool) {
+        unsafe { ShowWindow(hwnd(h), if show { SW_SHOWNOACTIVATE } else { SW_HIDE }) };
+    }
+
     pub fn cursor() -> Option<(i32, i32)> {
         let mut p = POINT { x: 0, y: 0 };
         (unsafe { GetCursorPos(&mut p) } != 0).then_some((p.x, p.y))
@@ -255,6 +264,10 @@ mod imp {
     pub fn on_any_screen(_: i32, _: i32) -> bool {
         false
     }
+    pub fn is_visible(_: isize) -> bool {
+        true
+    }
+    pub fn set_visible(_: isize, _: bool) {}
     pub fn cursor() -> Option<(i32, i32)> {
         None
     }

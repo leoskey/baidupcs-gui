@@ -4,6 +4,8 @@
 mod monitor;
 mod platform;
 mod store;
+#[cfg(windows)]
+mod tray;
 mod ui;
 
 use std::time::Duration;
@@ -37,6 +39,8 @@ fn main() {
             }
         })
         .detach();
-        ui::open_capsule(monitor, cx);
+        let _capsule = ui::open_capsule(monitor, cx);
+        #[cfg(windows)]
+        tray::run(_capsule, cx);
     });
 }

@@ -157,7 +157,7 @@ pub struct Capsule {
     _subscriptions: Vec<Subscription>,
 }
 
-pub fn open_capsule(monitor: Entity<Monitor>, cx: &mut App) {
+pub fn open_capsule(monitor: Entity<Monitor>, cx: &mut App) -> WindowHandle<Capsule> {
     let display = cx.primary_display().map(|d| d.bounds());
     let origin = display.map_or(point(px(100.), px(100.)), |b| {
         b.bottom_right() - point(px(240.), px(160.))
@@ -180,7 +180,7 @@ pub fn open_capsule(monitor: Entity<Monitor>, cx: &mut App) {
     cx.open_window(options, |window, cx| {
         cx.new(|cx| Capsule::new(monitor, window, cx))
     })
-    .expect("open capsule window");
+    .expect("open capsule window")
 }
 
 impl Capsule {
@@ -539,6 +539,19 @@ impl Capsule {
             cx.new(|cx| Menu::new(monitor, at, window, cx))
         })
         .ok();
+    }
+
+    /// 托盘调用：隐藏／显示胶囊；隐藏时一并收起面板。
+    pub fn toggle_visible(&mut self, cx: &mut Context<Self>) {
+        let Some(h) = self.hwnd else {
+            return;
+        };
+        if let Some(panel) = self.panel.take() {
+            panel.update(cx, |_, window, _| window.remove_window()).ok();
+            self.panel_hwnd = None;
+        }
+        let show = !platform::is_visible(h);
+        Self::native_later(cx, move || platform::set_visible(h, show), |_, _| {});
     }
 
     fn panel_opened(&mut self, hwnd: Option<isize>, cx: &mut Context<Self>) {
